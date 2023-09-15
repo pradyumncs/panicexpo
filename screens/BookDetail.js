@@ -9,6 +9,8 @@ import {
     Animated
 } from 'react-native';
 import { FONTS, COLORS, SIZES, icons } from "../constants";
+import { AntDesign } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons';
 
 const LineDivider = () => {
     return (
@@ -70,35 +72,20 @@ const BookDetail = ({ route, navigation }) => {
                             source={icons.back_arrow_icon}
                             resizeMode="contain"
                             style={{
-                                width: 25,
-                                height: 25,
+                                width: 35,
+                                height: 45,
                                 tintColor: book.navTintColor
                             }}
                         />
                     </TouchableOpacity>
 
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ ...FONTS.h3, color: book.navTintColor }}>Book Detail</Text>
-                    </View>
+            
 
-                    <TouchableOpacity
-                        style={{ marginRigth: SIZES.base }}
-                        onPress={() => console.log("Click More")}
-                    >
-                        <Image
-                            source={icons.more_icon}
-                            resizeMode="contain"
-                            style={{
-                                width: 30,
-                                height: 30,
-                                tintColor: book.navTintColor,
-                                alignSelf: 'flex-end'
-                            }}
-                        />
-                    </TouchableOpacity>
+                
                 </View>
 
                 {/* Book Cover */}
+                {/*
                 <View style={{ flex: 5, paddingTop: SIZES.padding2, alignItems: 'center' }}>
                     <Image
                         source={book.bookCover}
@@ -110,6 +97,7 @@ const BookDetail = ({ route, navigation }) => {
                         }}
                     />
                 </View>
+                    */}
 
                 {/* Book Name and Author */}
                 
@@ -162,8 +150,8 @@ const BookDetail = ({ route, navigation }) => {
                         { useNativeDriver: false }
                     )}
                 >
-                    <Text style={{ ...FONTS.h2, color: COLORS.white, marginBottom: SIZES.padding }}>Description</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.lightGray }}>{book.description}</Text>
+                    <Text style={{ ...FONTS.h2, color: COLORS.white, marginBottom: SIZES.padding }}>{book.bookName}</Text>
+                    <Text style={{ ...FONTS.body4, color: COLORS.white }}>{book.description}</Text>
                 </ScrollView>
             </View>
         )
@@ -173,29 +161,8 @@ const BookDetail = ({ route, navigation }) => {
         return (
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 {/* Bookmark */}
-                <TouchableOpacity
-                    style={{
-                        width: 60,
-                        backgroundColor: COLORS.secondary,
-                        marginLeft: SIZES.padding,
-                        marginVertical: SIZES.base,
-                        borderRadius: SIZES.radius,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                    onPress={() => console.log("Bookmark")}
-                >
-                    <Image
-                        source={icons.bookmark_icon}
-                        resizeMode="contain"
-                        style={{
-                            width: 25,
-                            height: 25,
-                            tintColor: COLORS.lightGray2
-                        }}
-                    />
-                </TouchableOpacity>
-
+               
+    
                 {/* Start Reading */}
                 <TouchableOpacity
                     style={{
@@ -205,21 +172,26 @@ const BookDetail = ({ route, navigation }) => {
                         marginVertical: SIZES.base,
                         borderRadius: SIZES.radius,
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        flexDirection: 'row' // Add this to make it horizontal
                     }}
                     onPress={() => console.log("Start Reading")}
                 >
-                    <Text style={{ ...FONTS.h3, color: COLORS.white }}>Start Reading</Text>
+                    <Entypo name="controller-play" size={32} color="black" />
+    
+                    {/* Add the text next to the icon */}
+                    <Text style={{ ...FONTS.body3, color: COLORS.white, marginLeft: 7 }}>Play Next</Text>
                 </TouchableOpacity>
             </View>
         )
     }
+    
 
     if (book) {
         return (
-            <View style={{ flex: 1, backgroundColor: COLORS.black }}>
+            <View style={{ flex: 1, backgroundColor: COLORS.lightBlue }}>
                 {/* Book Cover Section */}
-                <View style={{ flex: 4 }}>
+                <View style={{ flex: 3 }}>
                     {renderBookInfoSection()}
                 </View>
 
@@ -229,7 +201,7 @@ const BookDetail = ({ route, navigation }) => {
                 </View>
 
                 {/* Buttons */}
-                <View style={{ height: 70, marginBottom: 30 }}>
+                <View style={{ height: 70, marginBottom: 20 }}>
                     {renderBottomButton()}
                 </View>
             </View>

@@ -1,9 +1,12 @@
   {/* Manga Nova */}
-  import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+  import React, {  useLayoutEffect } from "react";
+  import { StatusBar } from 'expo-status-bar';
+  import { useRef, useEffect, useState } from 'react';
+  import { useFocusEffect } from '@react-navigation/native';
+  import { Divider, Text } from 'react-native-paper';
 import {
     SafeAreaView,
     View,
-    Text,
     TouchableOpacity,
     Image,
     ScrollView,
@@ -12,6 +15,8 @@ import {
 import { booksData } from './Data.js';
 import { COLORS, FONTS, SIZES, icons, images } from '../constants';
 import { AntDesign } from '@expo/vector-icons';
+import { StyleSheet, Button, Alert } from 'react-native';
+import { Video } from 'expo-av';
 
 const LineDivider = () => {
     return (
@@ -21,13 +26,20 @@ const LineDivider = () => {
     )
 }
 
+
+
+
+
 const Home = ({ navigation }) => {
 
     const [userstatepro, setUserstatepro] = useState(false);
+    
    
 
     const { 
         innerengineering,atomichabits,thinkandgrowrich,richdad,sevenhabits,
+        a1,a2,a3,a4,a5,a6,
+        b1,b2,b3,b4,b5,b6,
         
         onepiece, demonslayer, komisan, dragonballmultiverse,
          chainsawman,jibakushounen,bluelock,bananafish,
@@ -56,43 +68,46 @@ const Home = ({ navigation }) => {
    
     const myBooksData = [
         {
-            ...atomichabits,
+            ...a1,
         },
         
         {
-            ...thinkandgrowrich,           
+            ...a2,           
            
         },
         {
-            ...richdad,
+            ...a3,
 
         },
         {
-            ...sevenhabits,
+            ...a4,
 
         },
         {
-            ...innerengineering,
+            ...a5,
         },
         
     ]
 
     const myBooksData2 = [
         {
-            ...bluelock,
+            ...b1,
           
         },
         {
-            ...bananafish,
+            ...b2,
         },
         {
-            ...recordofragnarok,
+            ...b3,
         },
         {
-            ...goodnightpunpun,
+            ...b4,
         },
         {
-            ...talesofdemonsandgods,
+            ...b5,
+        },
+        {
+            ...b6,
         },
         
     ]
@@ -209,9 +224,9 @@ const Home = ({ navigation }) => {
     const categoriesData = [
         {
             id: 1,
-            categoryName: "Mejor vendedor",
+            categoryName: "Most Popular",
             books: [
-                innerengineering
+                a1
             ]
         },
        
@@ -227,28 +242,54 @@ const Home = ({ navigation }) => {
     const [myBooks7, setMyBooks7] = React.useState(myBooksData7);
     const [categories, setCategories] = React.useState(categoriesData);
     const [selectedCategory, setSelectedCategory] = React.useState(1);
+    const secondVideo = React.useRef(null);   
+    const [statusSecondVideo, setStatusSecondVideo] = React.useState({});
+    const [isPlaying, setIsPlaying] = useState(true);
+
+    useEffect(() => {
+        if (isPlaying) {
+          // Start video playback when the component mounts
+          secondVideo.current?.playAsync();
+        } else {
+          // Pause video when it's not playing
+          secondVideo.current?.pauseAsync();
+        }
+    
+        // Return a cleanup function to pause the video when the component unmounts
+        return () => {
+          secondVideo.current?.pauseAsync();
+        };
+      }, [isPlaying]);
+    
+      // Use useFocusEffect to control video playback when the screen is focused and blurred
+      useFocusEffect(
+        React.useCallback(() => {
+          // Start video playback when the screen is focused
+          setIsPlaying(true);
+    
+          // Return a cleanup function to stop video playback when screen is unfocused
+          return () => {
+            setIsPlaying(false);
+          };
+        }, [])
+      );
+    
 
     function renderHeader(profile) {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                {/* Greetings */}
-                
-                <View style={{ flex: 1 }}>
-                <TouchableOpacity
-                                    onPress={() => navigation.navigate("Premiums")}
-
-                                > 
-                                 <Image
-                            
-                            source={require("../assets/naturegif.gif")}
-                        />
-
-                
-                  </TouchableOpacity>
-                </View>
-
-                
-            </View>
+            <View style={styles.container}>
+            <Video
+              ref={secondVideo}
+              style={styles.video}
+              source={require("../assets/nature2.mp4")}
+              useNativeControls={false}
+              resizeMode="stretch"
+              shouldPlay
+              isLooping
+              onPlaybackStatusUpdate={setStatusSecondVideo}
+            />
+            
+          </View>
         )
     }
 
@@ -280,8 +321,8 @@ const Home = ({ navigation }) => {
                         source={item.bookCover}
                         resizeMode="cover"
                         style={{
-                            width: 170,
-                            height: 190,
+                            width: 215,
+                            height: 200,
                             borderRadius: 20
                         }}
                     />
@@ -289,8 +330,8 @@ const Home = ({ navigation }) => {
                     {/* Book Info */}
                     <View style={{ marginTop: SIZES.radius, flexDirection: 'row', alignItems: 'center' }}>
                         
-                       <AntDesign name="star" size={20} color="darkgrey" />
-                        <Text style={{ marginLeft: 5, ...FONTS.body3, color: COLORS.lightGray }}>{item.bookName.slice(0, 20) + "..."}</Text>
+                       <AntDesign name="star" size={15} color="red" />
+                        <Text style={{ ...FONTS.hf3, color: COLORS.black }}>{item.bookName}</Text>
                     {/*
                         <Image
                             source={icons.page_icon}
@@ -400,7 +441,7 @@ const Home = ({ navigation }) => {
                         <View style={{ flex: 1, marginLeft: SIZES.radius }}>
                             {/* Book name and author */}
                             <View>
-                                <Text style={{ paddingRight: SIZES.padding, ...FONTS.h2, color: COLORS.black }}>{item.bookName}</Text>
+                                <Text style={{ paddingRight: SIZES.padding, ...FONTS.hf3, color: COLORS.lightGray }}>{item.bookName}</Text>
                                 <Text style={{ ...FONTS.h3, color: COLORS.lightGray }}>{item.author}</Text>
                             </View>
 
@@ -488,20 +529,35 @@ const Home = ({ navigation }) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white}}>
             {/* Header Section */}
             <ScrollView style={{ flex: 1 }}>
-            <View style={{ height: 350 }}>
+            <View style={{ height: 300 }}>
                 {renderHeader(profile)}
              
             </View>
-
+            
             
             <ScrollView style={{ marginTop: SIZES.radius }}>
-                
+            <View style={{ height: 15 }}></View>
                 <View>
                     {renderMyBookSection(myBooks, "Visualize")}
                 </View>
+                <View style={{ height: 20 }}></View>
+                <View style={styles.container}>
+                <Divider style={styles.halfDivider} />
+                </View>
+            
+            <View style={{ height: 15 }}></View>
                 <View>
                     {renderMyBookSection(myBooksData2, "Anxiety")}
                 </View>
+                <View style={{ height: 20 }}></View>
+                <View style={styles.container}>
+                <Divider style={styles.halfDivider} />
+                </View>
+
+              
+
+
+                
                 {/* Books Section 
                 <View>
                     {renderMyBookSection(myBooks2,"Premium - Aventura")}
@@ -538,5 +594,26 @@ const Home = ({ navigation }) => {
         </SafeAreaView>
     )
 }
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    video: {
+      flex: 1,
+      alignSelf: 'stretch',
+      
+    },
+    halfDivider: {
+        height: 1.5,
+        backgroundColor: 'silver', 
+        marginVertical: 5,// Adjust the height to control the size of the divider
+         // Customize the color if needed
+         // Adjust the vertical margin as needed
+        width: '87%', // Set the width to 50% to make it half the size
+      },
+  });
 
 export default Home;

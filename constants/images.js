@@ -54,6 +54,7 @@ export const anxietymed3 = require("../assets/images/Row2/anxietymed(3).jpg");
 export const anxietymed4 = require("../assets/images/Row2/anxietymed(4).jpg");
 export const anxietymed5 = require("../assets/images/Row2/anxietymed(5).jpg");
 export const anxietymed6 = require("../assets/images/Row2/anxietymed(6).jpg");
+export const bi6 = require("../assets/images/Row2/bi(6).jpg");
 
 
 
@@ -62,7 +63,7 @@ export const anxietymed6 = require("../assets/images/Row2/anxietymed(6).jpg");
 
 export default {
     anxietymed1,anxietymed2,anxietymed3,anxietymed4,anxietymed5,anxietymed6,
-    vmed1,vmed2,vmed3,vmed4,vmed5,
+    vmed1,vmed2,vmed3,vmed4,vmed5,bi6,
 
     innerengineering,atomichabits,thinkandgrowrich,richdad,sevenhabits,
 

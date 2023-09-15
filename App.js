@@ -5,7 +5,6 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { BookDetail } from "./screens/";
 import Tabs from "./navigation/tabs";
 import { useFonts } from 'expo-font';
-
 const theme = {
     ...DefaultTheme,
     colors: {
@@ -14,6 +13,8 @@ const theme = {
     }
 }
 
+
+
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
             "Roboto-Black" : require('./assets/fonts/Roboto-Black.ttf'),
             "Roboto-Bold" : require('./assets/fonts/Roboto-Bold.ttf'),
             "Roboto-Regular" : require('./assets/fonts/Roboto-Regular.ttf'),
+            "sonnygothiccondensed-regular" : require('./assets/fonts/sonnygothiccondensed-regular.otf'),
         })
 
     if(!loaded){
